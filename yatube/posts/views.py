@@ -8,7 +8,7 @@ def index(request):
     title = 'Последние обновления на сайте'
     context = {
         'posts': posts,
-        'title': title, 
+        'title': title,
     }
     return render(request, template, context)
 

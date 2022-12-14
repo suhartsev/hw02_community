@@ -17,7 +17,7 @@ def group_posts(request, slug):
     template = 'posts/group_list.html'
     group = get_object_or_404(Group, slug=slug)
     posts = Post.objects.filter(group=group).order_by('-pub_date')[:10]
-    title = "Записи сообщества 'Группа тайных поклонников графа'"
+    title = f'Записи сообщества {group}'
     context = {
         'group': group,
         'posts': posts,

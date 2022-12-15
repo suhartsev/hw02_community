@@ -4,7 +4,9 @@
 {% endblock %} 
 {% block content %}
 <h1>{{ group.title }}</h1>
-  <p>{{ group.description }}</p>
+  <p>
+    {{ group.description }}
+  </p>
     {% for post in posts %}
       <ul>
         <li>

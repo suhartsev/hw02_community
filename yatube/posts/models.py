@@ -3,9 +3,11 @@ from django.contrib.auth import get_user_model
 
 User = get_user_model()
 
+MAX_LENGTH_TEXT = 200
+
 
 class Group(models.Model):
-    title = models.CharField(max_length=200)
+    title = models.CharField(max_length=MAX_LENGTH_TEXT)
     slug = models.SlugField(unique=True)
     description = models.TextField()
 
@@ -26,4 +28,8 @@ class Post(models.Model):
         blank=True,
         null=True,
         on_delete=models.SET_NULL,
-        related_name='posts')
+        related_name='posts'
+    )
+
+    class Meta:
+        ordering = ['-pub_date']

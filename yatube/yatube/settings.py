@@ -15,7 +15,7 @@ import os
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 
-#константа для лимита вывода постов на страницу(константа для views.py)
+# константа для лимита вывода постов на страницу(константа для views.py)
 LIMIT_POSTS = 10
 
 # Quick-start development settings - unsuitable for production

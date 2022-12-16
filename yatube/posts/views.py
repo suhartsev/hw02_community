@@ -13,5 +13,4 @@ def group_posts(request, slug):
     group = get_object_or_404(Group, slug=slug)
     posts = group.posts.all()[:settings.LIMIT_POSTS]
     return render(request, 'posts/group_list.html',
-    {'group': group,
-     'posts': posts,})
+                 {'group': group, 'posts': posts,})

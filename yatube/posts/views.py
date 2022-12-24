@@ -1,19 +1,26 @@
 from django.shortcuts import get_object_or_404, render
 from django.conf import settings
+from django.core.paginator import Paginator
 
 from .models import Post, Group
 
 
 def index(request):
-    posts = Post.objects.all()[:settings.LIMIT_POSTS]
-    return render(request, 'posts/index.html', {'posts': posts})
+    post_list = Post.objects.all()
+    paginator = Paginator(post_list, settings.LIMIT_POSTS)
+    page_number = request.GET.get('page')
+    page_obj = paginator.get_page(page_number)
+    return render(request, 'posts/index.html', {'page_obj': page_obj})
 
 
 def group_posts(request, slug):
     group = get_object_or_404(Group, slug=slug)
-    posts = group.posts.all()[:settings.LIMIT_POSTS]
+    post_list = group.posts.all()
+    paginator = Paginator(post_list, settings.LIMIT_POSTS)
+    page_number = request.GET.get('page')
+    page_obj = paginator.get_page(page_number)
     return render(
         request,
         'posts/group_list.html',
-        {'group': group, 'posts': posts}
+        {'group': group, 'page_obj': page_obj}
     )

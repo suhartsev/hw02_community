@@ -1,7 +1,8 @@
-from django.shortcuts import get_object_or_404, render
+from django.shortcuts import get_object_or_404, render, redirect
 from django.conf import settings
 from django.core.paginator import Paginator
 
+from .forms import PostForm
 from .models import Post, Group, User
 
 
@@ -52,3 +53,29 @@ def post_detail(request, post_id):
         'post_number': post_number,
     }
     return render(request, 'posts/post_detail.html', context)
+
+
+def post_create(request):
+    if request.method == 'POST':
+        form = PostForm(request.POST or None)
+        if form.is_valid():
+            post = form.save(commit=False)
+            post.author = request.user
+            post.save()
+            return redirect('posts:profile', post.author.username)
+    form = PostForm()
+    return render(request, 'posts/create_post.html', {'form': form})
+
+
+def post_edit(request, post_id):
+    post = get_object_or_404(Post, pk=post_id)
+    is_edit = True
+    form = PostForm(request.POST, instance=post)
+    if form.is_valid():
+        post.save()
+        return redirect('posts:post_detail', post_id)
+    context = {
+        'is_edit': is_edit,
+        'form': form,
+    }
+    return render(request, 'posts/create_post.html', context)
